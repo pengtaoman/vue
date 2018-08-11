@@ -1,0 +1,177 @@
+[
+  {
+    "fMenuId": "fakeFirstMenu",
+    "fLayer": 1,
+    "fMenuName": "系统管理",
+    "fMenuType": 0,
+    "fModuleId": "1",
+    "fParentMenuId": "",
+    "fPageLink": "/om/user/dealUser",
+    "active":0,
+    "icon":"fa fa-building",
+    "omSystemT": {
+      "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+      "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+      "fSystemName": "系统管理"
+    }
+  },
+  {
+    "fMenuId": "8a84fcfe511ee9c401511ee9d70f0012",
+    "fLayer": 1,
+    "fMenuName": "系统功能",
+    "fMenuType": 0,
+    "fModuleId": "1",
+    "fPageLink": "/om/menu/dealMenu",
+    "active":0,
+    "icon":"fa fa-building",
+    "fParentMenuId": "fakeFirstMenu",
+    "omSystemT": {
+      "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+      "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+      "fSystemName": "系统管理"
+    }
+  },
+  {
+    "fMenuId": "8a84fcfe511ee9c401511ee9d70f0013",
+    "fLayer": 1,
+    "fMenuName": "系统日志",
+    "fMenuType": 0,
+    "fModuleId": "1",
+    "fPageLink": "/demo/table/demo1",
+    "active":0,
+    "icon":"fa fa-building",
+    "fParentMenuId": "fakeFirstMenu",
+    "omSystemT": {
+      "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+      "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+      "fSystemName": "系统管理"
+    }
+  },
+  {
+    "fMenuId": "8a84fcfe512323c401511ee9d70f0014",
+    "fLayer": 1,
+    "fMenuName": "组织管理",
+    "fMenuType": 0,
+    "fModuleId": "1",
+    "fPageLink": "/om/organManage/organManage",
+    "active":0,
+    "icon":"fa fa-building",
+    "fParentMenuId": "fakeFirstMenu",
+    "omSystemT": {
+      "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+      "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+      "fSystemName": "系统管理"
+    }
+  },
+  {
+    "fMenuId": "8a84fcf2323233c401511ee9d70f0015",
+    "fLayer": 1,
+    "fMenuName": "职位管理",
+    "fMenuType": 0,
+    "fModuleId": "1",
+    "fPageLink": "/om/position/dealPosition",
+    "active":0,
+    "icon":"fa fa-building",
+    "fParentMenuId": "fakeFirstMenu",
+    "omSystemT": {
+      "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+      "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+      "fSystemName": "系统管理"
+    }
+  },
+  {
+    "fMenuId": "8a84fcf2323233c4sdssdsdee9d70f0015",
+    "fLayer": 1,
+    "fMenuName": "订单管理",
+    "fMenuType": 0,
+    "fModuleId": "1",
+    "fPageLink": "/om/position/businessNew",
+    "active":0,
+    "icon":"fa fa-building",
+    "fParentMenuId": "fakeFirstMenu",
+    "omSystemT": {
+      "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+      "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+      "fSystemName": "系统管理"
+    }
+  },
+  {
+    "fMenuId": "8a8asdfasdf3c401511ee9d70f0016",
+    "fLayer": 1,
+    "fMenuName": "角色管理",
+    "fMenuType": 0,
+    "fModuleId": "1",
+    "fPageLink": "/om/role/dealRole",
+    "active":0,
+    "icon":"fa fa-building",
+    "fParentMenuId": "fakeFirstMenu",
+    "omSystemT": {
+      "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+      "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+      "fSystemName": "系统管理"
+    }
+  },
+  {
+    "fMenuId": "8a8asdsdfcasdads511ee9d70f0017",
+    "fLayer": 1,
+    "fMenuName": "用户管理",
+    "fMenuType": 0,
+    "fModuleId": "1",
+    "fPageLink": "/om/user/dealUser",
+    "active":0,
+    "icon":"fa fa-building",
+    "fParentMenuId": "fakeFirstMenu",
+    "omSystemT": {
+      "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+      "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+      "fSystemName": "系统管理"
+    }
+  }
+  ,{
+    "fMenuId": "8a84fcfe511ee9c401511eeWEAWEFWAC10",
+    "fLayer": 1,
+    "fMenuName": "订单管理",
+    "fMenuType": 0,
+    "fModuleId": "1",
+    "fParentMenuId": "",
+    "active":0,
+    "icon":"fa fa-building",
+    "omSystemT": {
+      "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+      "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+      "fSystemName": "系统管理"
+    }
+  }
+  ,{
+  "fMenuId": "8a84fcfe511ee9c40sdsdsdsde3AC10",
+  "fLayer": 1,
+  "fMenuName": "综合订单受理",
+  "fMenuType": 0,
+  "fModuleId": "1",
+  "fPageLink": "/om/user/dealUser",
+  "fParentMenuId": "8a84fcfe511ee9c401511eeWEAWEFWAC10",
+  "active":0,
+  "icon":"fa fa-building",
+  "omSystemT": {
+    "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+    "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+    "fSystemName": "系统管理"
+  }
+}
+,{
+  "fMenuId": "8a84f23232sdf3201511eeWEAWEFWAC10",
+  "fLayer": 1,
+  "fMenuName": "业务变更",
+  "fMenuType": 0,
+  "fModuleId": "1",
+  "fParentMenuId": "8a84fcfe511ee9c401511eeWEAWEFWAC10",
+  "fPageLink": "/om/user/dealUser",
+  "active":0,
+  "icon":"fa fa-building",
+  "omSystemT": {
+    "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+    "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+    "fSystemName": "系统管理"
+  }
+}
+]

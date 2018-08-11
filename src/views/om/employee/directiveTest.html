@@ -1,0 +1,28 @@
+<div style="padding: 30px;">
+    <el-table :data="model.menus" border max-height="400">
+        <el-table-column
+                prop="id"
+                label="id"
+                type="selection"
+                fixed></el-table-column >
+        <el-table-tree-column
+                fixed
+                :expand-all="!!1"
+                :remote="remote"
+                file-icon="icon icon-file"
+                folder-icon="icon icon-folder"
+                prop="label"
+                label="title"
+                width="320"
+                class-name="123"
+                header-align="center"
+                :formatter="formatter">
+        </el-table-tree-column>
+        <el-table-column
+                prop="description"
+                label="Description"
+                :show-overflow-tooltip="true"
+                width="180"
+        ></el-table-column >
+    </el-table>
+</div>

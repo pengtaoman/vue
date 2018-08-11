@@ -1,0 +1,244 @@
+<div>
+    <Card style="width:100%">
+        <p slot="title">
+            <Icon type="search"></Icon>
+            搜索条件
+        </p>
+
+        <Form :model="formQuery" :label-width="100" ref="formQuery">
+            <Row>
+                <!--<Col span="8">-->
+                    <!--<FormItem label="地市" prop="city">-->
+                        <!--<Select v-model="formQuery.city">-->
+                            <!--<Option value="beijing">北京</Option>-->
+                            <!--<Option value="shanghai">上海</Option>-->
+                            <!--<Option value="shenzhen">深圳</Option>-->
+                        <!--</Select>-->
+                    <!--</FormItem>-->
+                <!--</Col>-->
+                <Col span="8">
+                    <FormItem label="用户账号" prop="account">
+                        <Input v-model="formQuery.account" placeholder="用户账号"></Input>
+                    </FormItem>
+                </Col>
+                <Col span="8">
+                <FormItem label="用户名" prop="name">
+                    <Input v-model="formQuery.name" placeholder="用户名"></Input>
+                </FormItem>
+                </Col>
+                <Col span="8">
+                <FormItem label="状态" prop="status">
+                    <Select v-model="formQuery.status">
+                        <Option v-for="item in statusOptions" :value="item.value" :key="item.value">{{item.label}}</Option>
+                    </Select>
+                </FormItem>
+                </Col>
+            </Row>
+
+            <!--<Row>-->
+                <!--<Col span="8">-->
+                <!--<FormItem label="状态" prop="status">-->
+                    <!--<Select v-model="formQuery.status">-->
+                        <!--<Option v-for="item in statusOptions" :value="item.value" :key="item.value">{{item.label}}</Option>-->
+                    <!--</Select>-->
+                <!--</FormItem>-->
+                <!--</Col>-->
+                <!--<Col span="8">-->
+                <!--</Col>-->
+                <!--<Col span="8">-->
+                <!--</Col>-->
+            <!--</Row>-->
+            <Row>
+                <Col span="8">&nbsp;
+                </Col>
+                <Col span="8">&nbsp;
+                </Col>
+                <Col span="2">&nbsp;
+                </Col>
+                <Col span="6">
+                    <FormItem>
+                        <Button type="primary" @click="doQuery">查询</Button>
+                        <Button type="ghost" style="margin-left: 8px" @click="doReset">重置</Button>
+                    </FormItem>
+                </Col>
+            </Row>
+        </Form>
+    </Card>
+    <br>
+    <Card style="width:100%" v-if="showResult">
+        <p slot="title">
+            <Icon type="person-stalker"></Icon>
+            人员管理
+        </p>
+
+        <Tabs value="name1">
+            <TabPane label="自有渠道人员" name="name1">
+                <div style="padding-bottom: 8px">
+                    <Button type="primary" @click="openAddUser">增加</Button>
+                    <!--<Button type="primary" @click="openUpdateUser">修改</Button>-->
+                    <Button type="primary" @click="activeUser" :disabled="true">激活</Button>
+                    <Button type="primary" @click="stopUser" :disabled="true">废止</Button>
+                    <!--<Button type="primary" @click="showPointRole">指定角色</Button>-->
+                    <!--<Button type="primary" @click="resetPwd">密码重置</Button>-->
+                    <Button type="primary" @click="exportUserList" style="float: right" :disabled="true">导出</Button>
+                </div>
+                <div>
+                    <i-table ref="checkEmployee"
+                             :columns="employeeCol"
+                             :data="employeeData"
+                             @on-selection-change="checkUser"
+                             size="large">
+                    </i-table>
+                    <div style="padding-top: 8px">
+                        <Page :total="userListTotal"  show-total
+                              @on-change="changeUserListPage"
+                              @on-page-size-change="changeUserListPageSize"
+                              ref="userPage"
+                              :transfer="true"></Page>
+                    </div>
+
+                </div>
+
+            </TabPane>
+            <TabPane label="地市管理员" name="name2" :disabled="true"></TabPane>
+            <TabPane label="社会渠道人员" name="name3" :disabled="true"></TabPane>
+            <TabPane label="国代商" name="name4" :disabled="true"></TabPane>
+            <!--<Button type="ghost" size="small" slot="extra">配置角色</Button>-->
+            <Button type="ghost" size="small" slot="extra" :disabled="true">个性化菜单</Button>
+            <Button type="ghost" size="small" slot="extra" :disabled="true">个性化首页</Button>
+        </Tabs>
+    </Card>
+    <Modal :title="modalTitle"
+            v-model="showUserAdd"
+            :mask-closable="false"
+            :closable="false"
+            ref="userModal"
+            :width=680>
+        <Form ref="formUserAdd" :model="formUserAdd" :label-width="100" :rules="ruleValidateUserAdd">
+            <Row>
+                <Col span="11">
+                <FormItem label="用户账号" prop="account">
+                    <Input type="text" v-model="formUserAdd.account" placeholder="用户ID"></Input>
+                </FormItem>
+                </Col>
+                <Col span="11">
+                <FormItem label="用户名" prop="name">
+                    <Input v-model="formUserAdd.name" placeholder="用户名"></Input>
+                </FormItem>
+                </Col>
+                <Col span="2">
+                    &nbsp;
+                </Col>
+            </Row>
+
+            <Row>
+                <Col span="11">
+                <FormItem label="email" prop="email">
+                    <Input v-model="formUserAdd.email" placeholder="email"></Input>
+                </FormItem>
+                <!--<FormItem label="密码" prop="pwd">-->
+                    <!--<Input v-model="formUserAdd.pwd" placeholder="密码" type="password"></Input>-->
+                <!--</FormItem>-->
+                </Col>
+                <Col span="11">
+                <FormItem label="联系电话" prop="phone">
+                    <Input v-model="formUserAdd.phone" placeholder="联系电话"></Input>
+                </FormItem>
+                </Col>
+                <Col span="2">
+                &nbsp;
+                </Col>
+            </Row>
+
+            <Row>
+                <Col span="11">
+                <!--<FormItem label="所属渠道">-->
+                    <!--<Select v-model="formUserAdd.channel">-->
+                        <!--<Option value="channel1">渠道1</Option>-->
+                        <!--<Option value="channel2">渠道2</Option>-->
+                    <!--</Select>-->
+                <!--</FormItem>-->
+                <FormItem label="状态" prop="status">
+                    <Select v-model="formUserAdd.status">
+                        <Option v-for="item in statusOptions" :value="item.value" :key="item.value">{{item.label}}</Option>
+                    </Select>
+                </FormItem>
+
+                </Col>
+                <Col span="11">
+
+                </Col>
+                <Col span="2">
+                &nbsp;
+                </Col>
+            </Row>
+        </Form>
+        <div slot="footer">
+
+            <Button v-if="showAddUserButton" type="primary" size="large" @click="addUser">录入添加</Button>
+            <Button v-if="showUpdateUserButton" type="primary" size="large" @click="updateUser">修改用户信息</Button>
+            <Button type="text" size="large" @click="cancelAddUser">关闭</Button>
+        </div>
+    </Modal>
+
+    <Modal :title="userRoleTitle"
+           v-model="showUserRoleModal"
+           :mask-closable="false"
+           :closable="false"
+           ref="roleModal"
+           :width=680>
+        <Card style="width:100%" v-if="showUserRoleModal">
+            <p slot="title">
+                <Icon type="person-stalker"></Icon>
+                角色指定
+            </p>
+            <i-table ref="tableRolesForMenu"
+                     :columns="rolesColForMenu"
+                     :data="rolesData"
+                     @on-selection-change="checkRole"
+                     :height=480></i-table>
+            <Page :total="roleTotal" size="small" @on-change="changeRoleListPage"></Page>
+        </Card>
+        <div slot="footer">
+            <Button type="primary" size="large" @click="pointRole">指定角色</Button>
+            <Button type="text" size="large" @click="cancelPointRole">关闭</Button>
+        </div>
+    </Modal>
+
+    <Modal title="密码重置"
+           v-model="showUserPWDModal"
+           :mask-closable="false"
+           :closable="false"
+           ref="userPwdModal"
+           :width=680>
+        <Card style="width:100%" v-if="showUserPWDModal">
+            <Form ref="formUserPwd" :model="formUserPwd" :label-width="100" :rules="ruleValidateUserPwd">
+                <Row>
+                    <Col span="20">
+                    <FormItem label="旧密码" prop="oldPwd">
+                        <Input v-model="formUserPwd.oldPwd" placeholder="旧密码"></Input>
+                    </FormItem>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span="20">
+                    <FormItem label="新密码" prop="newPwd">
+                        <Input v-model="formUserPwd.newPwd" placeholder="新密码"></Input>
+                    </FormItem>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span="20">
+                    <FormItem label="确认新密码" prop="confirmNewPwd">
+                        <Input v-model="formUserPwd.confirmNewPwd" placeholder="确认新密码"></Input>
+                    </FormItem>
+                    </Col>
+                </Row>
+            </Form>
+        </Card>
+        <div slot="footer">
+            <Button type="primary" size="large" @click="updatePwd">修改密码</Button>
+            <Button type="text" size="large" @click="cancelUpdatePwd">关闭</Button>
+        </div>
+    </Modal>
+</div>

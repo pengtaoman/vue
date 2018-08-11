@@ -1,0 +1,204 @@
+<div>
+    <div id="st" style="display: none"></div>
+    <Card style="width:100%">
+        <p slot="title">
+            <Icon type="search"></Icon>
+            搜索条件
+        </p>
+
+        <Form :model="formQuery" :label-width="100" ref="formQuery">
+            <Row>
+                <Col span="8">
+                <FormItem label="角色名称" prop="name">
+                    <Input v-model="formQuery.name" placeholder="请输入角色名称"></Input>
+                </FormItem>
+                </Col>
+                <Col span="8">
+                <FormItem label="状态" prop="status">
+                    <Select v-model="formQuery.status">
+                        <Option v-for="item in statusOptions" :value="item.value" :key="item.value">{{item.label}}</Option>
+                    </Select>
+                </FormItem>
+                </Col>
+                <Col span="8">
+                </Col>
+            </Row>
+            <Row>
+                <Col span="8">&nbsp;
+                </Col>
+                <Col span="8">&nbsp;
+                </Col>
+                <Col span="8">
+                <FormItem>
+                    <Button type="primary" @click="doQuery">查询</Button>
+                    <Button type="ghost" style="margin-left: 8px" @click="doReset">重置</Button>
+                </FormItem>
+                </Col>
+            </Row>
+        </Form>
+    </Card>
+    <br>
+    <Card style="width:100%" v-if="showResult">
+        <p slot="title">
+            <Icon type="person-stalker"></Icon>
+                角色管理
+        </p>
+        <Button type="ghost" size="small" slot="extra" @click="openConfigRoleMenu">权限配置</Button>
+        <!--<Button type="ghost" size="small" slot="extra">权限配置</Button>-->
+        <Button type="ghost" size="small" slot="extra" :disabled="true">首页配置</Button>
+        <Button type="ghost" size="small" slot="extra" :disabled="true">清理缓存</Button>
+
+        <div style="padding-bottom: 8px">
+            <Button type="primary" @click="openAddRole">增加</Button>
+            <!--<Button type="primary" @click="openUpdateUser">修改</Button>-->
+            <Button type="primary" @click="activeRole" :disabled="true">启用</Button>
+            <Button type="primary" @click="stopRole" :disabled="true">废止</Button>
+            <!--<Button type="primary" @click="resetPwd">密码重置</Button>-->
+            <Button type="primary" @click="exportUserList" style="float: right" :disabled="true">导出</Button>
+        </div>
+
+
+        <i-table ref="tableRoles"
+                 :columns="rolesCol"
+                 :data="rolesData"
+                 @on-selection-change="checkRole"
+                 size="large">
+        </i-table>
+        <div style="padding-top: 8px">
+            <!-- 角色无分页-->
+            <Page :total="roleListTotal"  show-total
+                  @on-change="changeRoleListPage"
+                  @on-page-size-change="changeRoleListPageSize"
+                  ref="rolePage"
+                  :transfer="true"></Page>
+        </div>
+
+    </Card>
+    <Modal title="角色添加"
+           v-model="showRoleAdd"
+           :mask-closable="false"
+           :closable="false"
+           ref="roleModal"
+           :width=680>
+        <Form ref="formRoleAdd" :model="formRoleAdd" :label-width="100" :rules="ruleValidateRoleAdd">
+            <Row>
+                <Col span="11">
+                <FormItem label="角色名称" prop="name">
+                    <Input type="text" v-model="formRoleAdd.name" placeholder="角色名称"></Input>
+                </FormItem>
+                </Col>
+                <Col span="11">
+                <FormItem label="状态" prop="status">
+                    <Select v-model="formRoleAdd.status" @on-change="changeOp">
+                        <Option v-for="item in statusOptions" :value="item.value" :key="item.value">{{item.label}}</Option>
+                    </Select>
+                </FormItem>
+                </Col>
+                <Col span="2">
+                &nbsp;
+                </Col>
+            </Row>
+
+            <Row>
+                <Col span="22">
+                <FormItem label="角色描述" prop="note">
+                    <Input v-model="formRoleAdd.note" placeholder="角色描述" type="textarea"></Input>
+                </FormItem>
+                </Col>
+                <Col span="2">
+                &nbsp;
+                </Col>
+            </Row>
+        </Form>
+        <div slot="footer">
+            <Button v-if="showAddRoleButton" type="primary" size="large" @click="addRole">录入添加</Button>
+            <Button v-if="showUpdateRoleButton" type="primary" size="large" @click="updateRole">修改角色信息</Button>
+            <Button type="text" size="large" @click="cancelAddRole">关闭</Button>
+        </div>
+    </Modal>
+
+    <Modal title="角色菜单配置"
+           v-model="showConfigRoleMenu"
+           :mask-closable="false"
+           :closable="false"
+           :width=1080>
+        <Row>
+            <Col span="11">
+                <Card style="width:100%" v-if="showConfigRoleMenu">
+                    <p slot="title">
+                        <Icon type="person-stalker"></Icon>
+                        角色指定{{roleName}}
+                    </p>
+                    <i-table ref="tableRolesForMenu"
+                             :columns="rolesColForMenu"
+                             :data="rolesDataForMenu"
+                             @on-row-click="roleMenuRowClick"
+                             :highlight-row=true
+                             :height=480></i-table>
+                    <Page :total="roleTotalForMenu" size="small" ref="roleMenuTablePage"
+                          @on-change="changeRoleListPageForMenu"></Page>
+                </Card>
+            </Col>
+            <Col span="1">&nbsp;</Col>
+            <Col span="12">
+                <Card style="width:100%" v-if="showConfigRoleMenu">
+                    <p slot="title">
+                        <Icon type="android-menu"></Icon>
+                        菜单选择
+                    </p>
+                    <Button type="ghost" size="small" slot="extra"  @click="checkedAllMenu">全选</Button>
+                    <Button type="ghost" size="small" slot="extra"  @click="resetCheckedAllMenu">清空</Button>
+
+                    <el-tree :data="menus"
+                             node-key="id"
+                             ref="treeMenu"
+                             :props="defaultProps"
+                             show-checkbox
+                             default-expand-all
+                             :expand-on-click-node="false"
+                             @check-change="checkTreeMenu"
+                             style="border: 0px;height: 480px;"
+                             :highlight-current="true"></el-tree>
+                </Card>
+            </Col>
+        </Row>
+        <div slot="footer">
+            <Button type="primary" size="large" @click="configRoleMenu">设置角色菜单</Button>
+            <Button type="text" size="large" @click="cancelRoleMenu">关闭</Button>
+        </div>
+    </Modal>
+
+    <Modal :title="singleRoleTitle"
+           v-model="showConfigSingleRoleMenu"
+           :mask-closable="false"
+           :closable="false"
+           ref="modalSingleRoleMenu"
+           :width=580>
+        <Row>
+            <Col span="24">
+            <Card style="width:100%" v-if="showConfigSingleRoleMenu">
+                <p slot="title">
+                    <Icon type="android-menu"></Icon>
+                    菜单选择
+                </p>
+                <Button type="ghost" size="small" slot="extra"  @click="checkedAllMenuSingle">全选</Button>
+                <Button type="ghost" size="small" slot="extra"  @click="resetCheckedAllMenuSingle">清空</Button>
+
+                <el-tree :data="menus"
+                         node-key="id"
+                         ref="treeMenuSingle"
+                         :props="defaultProps"
+                         show-checkbox
+                         default-expand-all
+                         :expand-on-click-node="false"
+                         style="border: 0px;height: 480px;"
+                         :highlight-current="true"></el-tree>
+            </Card>
+            </Col>
+        </Row>
+        <div slot="footer">
+            <Button type="primary" size="large" @click="configSingleRoleMenu">设置角色菜单</Button>
+            <Button type="text" size="large" @click="cancelSingleRoleMenu">关闭</Button>
+        </div>
+    </Modal>
+</div>

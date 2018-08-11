@@ -1,0 +1,105 @@
+// {"content":[
+//   {
+//     "id":1,
+//     "fMenuId": "fakeFirstMenu",
+//     "fLayer": 1,
+//     "fMenuName": "系统管理",
+//     "fMenuType": 0,
+//     "fModuleId": "1",
+//     "fParentMenuId": "",
+//     "fPageLink": "/om/user/dealUser",
+//     "fInuse":1,
+//     "icon":"fa fa-cart-plus",
+//     "omSystemT": {
+//       "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+//       "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+//       "fSystemName": "系统管理"
+//     }
+//   },
+//   {
+//     "id":2,
+//     "fMenuId": "8a84fcfe511ee9c401511ee9d70f0012",
+//     "fLayer": 1,
+//     "fMenuName": "系统功能",
+//     "fMenuType": 1,
+//     "fModuleId": "1",
+//     "fPageLink": "/om/menu/dealMenu",
+//     "fInuse":0,
+//     "icon":"fa fa-building",
+//     "fParentMenuId": "fakeFirstMenu",
+//     "omSystemT": {
+//       "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+//       "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+//       "fSystemName": "系统管理"
+//     }
+//   },
+//   {
+//     "id":3,
+//     "fMenuId": "8a8asdsdfcasdads511ee9d70f0017",
+//     "fLayer": 1,
+//     "fMenuName": "用户管理",
+//     "fMenuType": 0,
+//     "fModuleId": "1",
+//     "fPageLink": "/om/user/dealUser",
+//     "fInuse":0,
+//     "icon":"fa fa-building",
+//     "fParentMenuId": "fakeFirstMenu",
+//     "omSystemT": {
+//       "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+//       "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+//       "fSystemName": "系统管理"
+//     }
+//   },
+//   {
+//     "id":4,
+//     "fMenuId": "8a8asdfasdf3c401511ee9d70f0016",
+//     "fLayer": 1,
+//     "fMenuName": "角色管理",
+//     "fMenuType": 0,
+//     "fModuleId": "1",
+//     "fPageLink": "/om/role/dealRole",
+//     "active":0,
+//     "icon":"fa fa-building",
+//     "fParentMenuId": "fakeFirstMenu",
+//     "omSystemT": {
+//       "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+//       "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+//       "fSystemName": "系统管理"
+//     }
+//   },
+//   {
+//     "id":5,
+//     "fMenuId": "8a84fcfe512323c401511ee9d70f0014",
+//     "fLayer": 1,
+//     "fMenuName": "组织管理",
+//     "fMenuType": 0,
+//     "fModuleId": "1",
+//     "fPageLink": "/om/position/businessNew",
+//     "fInuse":0,
+//     "icon":"fa fa-building",
+//     "fParentMenuId": "fakeFirstMenu",
+//     "omSystemT": {
+//       "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+//       "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+//       "fSystemName": "系统管理"
+//     }
+//   },
+//   {
+//     "id":6,
+//     "fMenuId": "8a84fcf2323233c401511ee9d70f0015",
+//     "fLayer": 1,
+//     "fMenuName": "职位管理",
+//     "fMenuType": 0,
+//     "fModuleId": "1",
+//     "fPageLink": "/om/position/dealPosition",
+//     "fInuse":0,
+//     "icon":"fa fa-building",
+//     "fParentMenuId": "fakeFirstMenu",
+//     "omSystemT": {
+//       "fSystemId": "8a84fcfe511ee9c401511ee9d70d0010",
+//       "fParentSystemId": "8a84fcfe511ee9c401511ee9d6e90000",
+//       "fSystemName": "系统管理"
+//     }
+//   }
+// ]
+// }

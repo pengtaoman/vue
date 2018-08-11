@@ -1,0 +1,3 @@
+基于vue requirejs vue-router vuex axios的前端框架
+
+脱离vue-cli编译处理，完全依赖AMD方式进行模块加载，完全前端动态路由实现，SPA单页模式设计

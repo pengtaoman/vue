@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>VUE Admin</title>
+
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    <link href="./node_modules/nprogress/nprogress.css" rel="stylesheet" type="text/css">
+    <link href="./node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link href="./common/css/AdminLTE.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./common/css/skins/_all-skins.min.css">
+    <link href="./node_modules/element-ui/lib/theme-default/index.css" rel="stylesheet" type="text/css">
+    <link href="./node_modules/iview/dist/styles/iview.css" rel="stylesheet" type="text/css">
+
+        <style type="text/css">
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper" id="app" style="overflow: hidden;">
+
+    <component :is="pageHead"></component>
+    <!-- Left side column. contains the logo and sidebar -->
+    <pageside></pageside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <span v-cloak style="font-size: 16px;"> &nbsp;
+                {{contentHeader}}
+                <!--<small>Control panel</small>-->
+            </span>
+            <ol class="breadcrumb" style="float: left" v-cloak>
+                <li><router-link to="/home/main/home" v-cloak><i class="fa fa-dashboard"></i> Home</router-link></li>
+                <li class="active" v-for="bread in breads">{{bread.fMenuName}}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content" style="padding: 5px;padding-top: 10px;">
+            <!-- Small boxes (Stat box) -->
+            <div class="box" id="mainContentDiv" style="border-top:0px;margin-bottom:0px">
+                <router-view></router-view>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!------------------------------------------------------------------>
+    <!--<footer class="main-footer">-->
+        <!--<div class="pull-right hidden-xs">-->
+            <!--Version 1.0-->
+        <!--</div>-->
+        <!--Copyright &copy; 2014-2017 <a href="#">TD Admin</a>. All rights-->
+        <!--reserved.-->
+    <!--</footer>-->
+
+    <!-- Control Sidebar -->
+    <!--<aside class="control-sidebar control-sidebar-dark">-->
+        <!--&lt;!&ndash; Create the tabs &ndash;&gt;-->
+        <!--<ul class="nav nav-tabs nav-justified control-sidebar-tabs">-->
+            <!--<li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>-->
+            <!--<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>-->
+        <!--</ul>-->
+        <!--&lt;!&ndash; Tab panes &ndash;&gt;-->
+        <!--<div class="tab-content">-->
+            <!--&lt;!&ndash; Home tab content &ndash;&gt;-->
+            <!--<div class="tab-pane" id="control-sidebar-home-tab">-->
+                <!--<h3 class="control-sidebar-heading">Recent Activity</h3>-->
+                <!--<ul class="control-sidebar-menu">-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)">-->
+                            <!--<i class="menu-icon fa fa-birthday-cake bg-red"></i>-->
+
+                            <!--<div class="menu-info">-->
+                                <!--<h4 class="control-sidebar-subheading">Langdon's Birthday</h4>-->
+
+                                <!--<p>Will be 23 on April 24th</p>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)">-->
+                            <!--<i class="menu-icon fa fa-user bg-yellow"></i>-->
+
+                            <!--<div class="menu-info">-->
+                                <!--<h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>-->
+
+                                <!--<p>New phone +1(800)555-1234</p>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)">-->
+                            <!--<i class="menu-icon fa fa-envelope-o bg-light-blue"></i>-->
+
+                            <!--<div class="menu-info">-->
+                                <!--<h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>-->
+
+                                <!--<p>nora@example.com</p>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)">-->
+                            <!--<i class="menu-icon fa fa-file-code-o bg-green"></i>-->
+
+                            <!--<div class="menu-info">-->
+                                <!--<h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>-->
+
+                                <!--<p>Execution time 5 seconds</p>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--&lt;!&ndash; /.control-sidebar-menu &ndash;&gt;-->
+
+                <!--<h3 class="control-sidebar-heading">Tasks Progress</h3>-->
+                <!--<ul class="control-sidebar-menu">-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)">-->
+                            <!--<h4 class="control-sidebar-subheading">-->
+                                <!--Custom Template Design-->
+                                <!--<span class="label label-danger pull-right">70%</span>-->
+                            <!--</h4>-->
+
+                            <!--<div class="progress progress-xxs">-->
+                                <!--<div class="progress-bar progress-bar-danger" style="width: 70%"></div>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)">-->
+                            <!--<h4 class="control-sidebar-subheading">-->
+                                <!--Update Resume-->
+                                <!--<span class="label label-success pull-right">95%</span>-->
+                            <!--</h4>-->
+
+                            <!--<div class="progress progress-xxs">-->
+                                <!--<div class="progress-bar progress-bar-success" style="width: 95%"></div>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)">-->
+                            <!--<h4 class="control-sidebar-subheading">-->
+                                <!--Laravel Integration-->
+                                <!--<span class="label label-warning pull-right">50%</span>-->
+                            <!--</h4>-->
+
+                            <!--<div class="progress progress-xxs">-->
+                                <!--<div class="progress-bar progress-bar-warning" style="width: 50%"></div>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)">-->
+                            <!--<h4 class="control-sidebar-subheading">-->
+                                <!--Back End Framework-->
+                                <!--<span class="label label-primary pull-right">68%</span>-->
+                            <!--</h4>-->
+
+                            <!--<div class="progress progress-xxs">-->
+                                <!--<div class="progress-bar progress-bar-primary" style="width: 68%"></div>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--&lt;!&ndash; /.control-sidebar-menu &ndash;&gt;-->
+
+            <!--</div>-->
+            <!--&lt;!&ndash; /.tab-pane &ndash;&gt;-->
+            <!--&lt;!&ndash; Stats tab content &ndash;&gt;-->
+            <!--<div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>-->
+            <!--&lt;!&ndash; /.tab-pane &ndash;&gt;-->
+            <!--&lt;!&ndash; Settings tab content &ndash;&gt;-->
+            <!--<div class="tab-pane" id="control-sidebar-settings-tab">-->
+                <!--<form method="post">-->
+                    <!--<h3 class="control-sidebar-heading">General Settings</h3>-->
+
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-sidebar-subheading">-->
+                            <!--Report panel usage-->
+                            <!--<input type="checkbox" class="pull-right" checked>-->
+                        <!--</label>-->
+
+                        <!--<p>-->
+                            <!--Some information about this general settings option-->
+                        <!--</p>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /.form-group &ndash;&gt;-->
+
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-sidebar-subheading">-->
+                            <!--Allow mail redirect-->
+                            <!--<input type="checkbox" class="pull-right" checked>-->
+                        <!--</label>-->
+
+                        <!--<p>-->
+                            <!--Other sets of options are available-->
+                        <!--</p>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /.form-group &ndash;&gt;-->
+
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-sidebar-subheading">-->
+                            <!--Expose author name in posts-->
+                            <!--<input type="checkbox" class="pull-right" checked>-->
+                        <!--</label>-->
+
+                        <!--<p>-->
+                            <!--Allow the user to show his name in blog posts-->
+                        <!--</p>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /.form-group &ndash;&gt;-->
+
+                    <!--<h3 class="control-sidebar-heading">Chat Settings</h3>-->
+
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-sidebar-subheading">-->
+                            <!--Show me as online-->
+                            <!--<input type="checkbox" class="pull-right" checked>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /.form-group &ndash;&gt;-->
+
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-sidebar-subheading">-->
+                            <!--Turn off notifications-->
+                            <!--<input type="checkbox" class="pull-right">-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /.form-group &ndash;&gt;-->
+
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-sidebar-subheading">-->
+                            <!--Delete chat history-->
+                            <!--<a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /.form-group &ndash;&gt;-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; /.tab-pane &ndash;&gt;-->
+        <!--</div>-->
+    <!--</aside>-->
+    <!--&lt;!&ndash; /.control-sidebar &ndash;&gt;-->
+    <!--&lt;!&ndash; Add the sidebar's background. This div must be placed-->
+         <!--immediately after the control sidebar &ndash;&gt;-->
+    <!--<div class="control-sidebar-bg"></div>-->
+
+    <Modal title="系统登录过期，请重新登录"
+           v-model="showReloginModal"
+           :mask-closable="false"
+           :closable="false"
+           ref="showReloginModal"
+           :width=680>
+        <el-card style="width:620px" v-if="showReloginModal">
+            <el-form ref="reloginForm" :model="reloginForm" label-width="130px" :rules="reloginRule">
+                <Row>
+                    <Col span="20">
+                        <el-form-item label="用户名" prop="userName">
+                            <el-input type="password" v-model="reloginForm.userName" placeholder="用户名"></el-input>
+                        </el-form-item>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span="20">
+                        <el-form-item label="密码" prop="password">
+                            <el-input type="password" v-model="reloginForm.password" placeholder="密码"></el-input>
+                        </el-form-item>
+                    </Col>
+                </Row>
+            </el-form>
+        </el-card>
+        <div slot="footer">
+            <el-button type="primary" size="large" @click="doRelogin">确定</el-button>
+            <el-button type="text" size="large" @click="forwardLogin">返回登录页面</el-button>
+        </div>
+    </Modal>
+</div>
+<!-- ./wrapper -->
+
+<script src="./node_modules/babel-polyfill/dist/polyfill.min.js"></script>
+<script src="./node_modules/whatwg-fetch/fetch.js"></script>
+<script src="./node_modules/es6-promise/dist/es6-promise.min.js"></script>
+<script src="./node_modules/es6-promise/dist/es6-promise.auto.min.js"></script>
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="./node_modules/nprogress/nprogress.js"></script>
+<script src="./node_modules/lodash/lodash.min.js"></script>
+<script src="./node_modules/uuidjs/dist/uuid.core.js"></script>
+<script src="./node_modules/jwt-decode/build/jwt-decode.min.js"></script>
+<script>
+    var basePath = '.';
+</script>
+<script data-main="./common/js/script"
+        data-require="require.js@*"
+        data-semver="2.3.5"
+        src="./node_modules/requirejs/require.js"></script>
+</body>
+</html>

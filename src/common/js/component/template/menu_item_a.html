@@ -1,0 +1,21 @@
+<script type="text/x-template" id="menuitem-template">
+    <li class="treeview" v-if="pmenu.children" style="font-size:15px;">
+        <a href="#">
+            <!--<i :class="pmenu.icon"></i>-->
+            <i class="fa fa-bars"></i>
+            <span>{{pmenu.fMenuName}}</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span></a>
+        <ul class="treeview-menu">
+            <menu_item  v-for="cmenu in pmenu.children" v-cloak :model="cmenu" :key="cmenu.fMenuId"></menu_item>
+        </ul>
+    </li>
+    <li class="" style="font-size:15px;" v-else>
+        <router-link :to="pmenu.fPageLink" style="font-size:15px;" v-cloak>
+            <!--<i :class="pmenu.icon"></i>&nbsp;-->
+            <i :class=""></i>
+            <span>{{pmenu.fMenuName}}</span>
+        </router-link>
+    </li>
+</script>

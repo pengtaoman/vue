@@ -1,0 +1,142 @@
+  <div>
+      <div>
+          <el-table :data="tableData" border style="width: 100%">
+              <el-table-column fixed prop="date" label="日期" width="150">
+              </el-table-column>
+              <el-table-column prop="name" label="姓名" width="120">
+              </el-table-column>
+              <el-table-column prop="province" label="省份" width="120">
+              </el-table-column>
+              <el-table-column prop="city" label="市区" width="120">
+              </el-table-column>
+              <el-table-column prop="address" label="地址" width="300">
+              </el-table-column>
+              <el-table-column prop="zip" label="邮编" width="120">
+              </el-table-column>
+              <el-table-column label="操作" width="100">
+                  <template scope="scopeAA">
+                      <el-button @click="handleClick(scopeAA.row)" type="text" size="small">查看</el-button>
+                      <el-button type="text" size="small">编辑</el-button>
+                  </template>
+              </el-table-column>
+          </el-table>
+      </div>
+      <div align="left">
+
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tab-pane label="客户定位" name="first">
+                  <el-form ref="form" :model="form"  label-width="100px" >
+                      <el-row>
+                          <el-col :span="4">
+                                  <el-tag>姓名</el-tag>
+                                  <el-input v-model="form.name" :disabled="true" ></el-input>
+                          </el-col>
+                          <el-col :span="4">
+                              <el-tag>证件</el-tag>
+                              <el-input v-model="form.va" :disabled="true" ></el-input>
+                          </el-col>
+                          <el-col :span="4">
+                              <el-tag>地区</el-tag>
+                              <el-input v-model="form.area" :disabled="true" ></el-input>
+                          </el-col>
+                          <el-col :span="4">
+                              <el-tag>客户等级</el-tag>
+                              <el-input v-model="form.level" :disabled="true" ></el-input>
+                          </el-col>
+                          <el-col :span="4">
+                              <el-tag>客户分群</el-tag>
+                              <el-input v-model="form.group" :disabled="true" ></el-input>
+                          </el-col>
+                          <el-col :span="4">
+                              <el-tag>客户标签</el-tag>
+                              <el-input v-model="form.label" :disabled="true" ></el-input>
+                          </el-col>
+                          <el-form-item>
+                              <el-button type="primary" size="small" @click="reLocation('user')" icon="el-icon-refresh">重新定位</el-button>
+                          </el-form-item>
+                      </el-row>
+
+                  </el-form>
+              </el-tab-pane>
+              <el-tab-pane label="已订购业务" name="second">
+                  已订购业务
+              </el-tab-pane>
+
+          </el-tabs>
+      </div>
+            <el-steps :active="active" finish-status="success">
+                <el-step title="第一步：订单准备"></el-step>
+                <el-step title="第二步：订单确认"></el-step>
+                <el-step title="第三步：收银台"></el-step>
+            </el-steps>
+      <el-form :inline="true" :model="form1" class="demo-form-inline">
+          <el-row>
+              <el-col :span="12">
+                  <el-form-item label="选择套餐:">
+                      <div style="width:300px;">
+                          <el-input autosize v-model="form1.prodoffername" placeholder="请输入您要搜索的套餐名称或者首字母简称"></el-input>
+                      </div>
+                  </el-form-item>
+                  <el-form-item>
+                      <el-button type="primary" @click="onSubmit">查询</el-button>
+                  </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                  <el-form-item label="价格范围:">
+                      <el-radio-group v-model="radio">
+                          <el-radio :label="1">不限</el-radio>
+                          <el-radio :label="2">100以下</el-radio>
+                          <el-radio :label="3">100-200</el-radio>
+                          <el-radio :label="4">200-300</el-radio>
+                          <el-radio :label="5">300以上</el-radio>
+                      </el-radio-group>
+                  </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                  <el-form-item label="流量范围:">
+                      <el-radio-group v-model="radio1">
+                          <el-radio :label="1">不限</el-radio>
+                          <el-radio :label="2">2G以下</el-radio>
+                          <el-radio :label="3">2G-3G</el-radio>
+                          <el-radio :label="4">3G-4G</el-radio>
+                          <el-radio :label="5">4G以上</el-radio>
+                      </el-radio-group>
+                  </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                  <el-form-item label="语音分钟数:">
+                      <el-radio-group v-model="radio2">
+                          <el-radio :label="1">不限</el-radio>
+                          <el-radio :label="2">1-200</el-radio>
+                          <el-radio :label="3">200-300</el-radio>
+                          <el-radio :label="4">300-600</el-radio>
+                          <el-radio :label="5">600以上</el-radio>
+                      </el-radio-group>
+                  </el-form-item>
+              </el-col>
+
+          </el-row>
+      </el-form>
+      <div>
+          <el-form :inline="true" :model="form2" >
+              <el-dialog title="套餐信息" v-model="dialogTableVisible">
+                  <el-table v-loading="loading":data="gridProdOfferData">
+                      <el-table-column property="prodoffername" label="套餐名称" width="150"></el-table-column>
+                      <el-table-column property="prodofferinfos" label="套餐详情" width="200"></el-table-column>
+                      <el-table-column property="prodofferflow" label="套餐流量是否清零"></el-table-column>
+                      <el-table-column  fixed="right" label="操作">
+                          <template scope="scope">
+                          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                          <el-button type="text" size="small">订购</el-button>
+                          </template>
+                      </el-table-column>
+
+                  </el-table>
+              </el-dialog>
+          </el-form>
+      </div>
+        <div align="right">
+            <el-button  type="primary" style="margin-top: 12px;"  @click="reNext">上一步</el-button>
+            <el-button  type="primary" style="margin-top: 12px;"  @click="next">下一步</el-button>
+        </div>
+  </div>

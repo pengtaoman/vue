@@ -1,0 +1,239 @@
+<el-row>
+    <el-col :span="8">
+        <div class="box" style="border: 0px;box-shadow:none;">
+            <el-card class="box-card" style="border: 0px;box-shadow:none;">
+                <div slot="header" style="padding-bottom: 0px;">
+                    <span style="line-height: 0px;">组织管理</span>
+                </div>
+                <el-tree :data="menus2"
+                         :props="defaultProps"
+                         @node-click="handleNodeClick"
+                         :expand-on-click-node="false"
+                         style="border: 0px"
+                         :highlight-current="true"></el-tree>
+                <!--<el-col :span="1">&nbsp;</el-col>-->
+            </el-card>
+        </div>
+    </el-col>
+    <div id="st" style="display: none"></div>
+    <el-col :span="16" style="padding-left: 20px;" id="menuForm2">
+        <el-card class="box-card" style="box-shadow:none;border: 0px;">
+            <div slot="header"  style="padding-bottom: 0px;">
+                <span style="line-height: 0px;">功能信息</span>
+                <span style="float: right;">
+                    <el-button  type="primary" :disabled="false" size="small" @click="dialogFormVisible = true">添加子部门</el-button>
+                    <el-button  type="primary" :disabled="true" size="small" @click="deleteOrganization">删除功能</el-button>
+                    <el-button  type="primary" :disabled="true" size="small" @click="updateOrganization">保存修改</el-button>
+                    <el-button  type="primary"  :disabled="true" size="small">角色授予</el-button>
+                </span>
+            </div>
+        </el-card>
+    </el-col>
+    <el-col :span="16" style="padding-left: 20px;" id="menuForm">
+        <el-card class="box-card" style="box-shadow:none;border: 0px;">
+            <div slot="header"  style="padding-bottom: 0px;">
+                <span style="line-height: 0px;">功能信息</span>
+                <span style="float: right;">
+                    <el-button  type="primary" :disabled="disableAddButton" size="small" @click="dialogFormVisible = true">添加子部门</el-button>
+                    <el-button  type="primary" :disabled="disableDelButton" size="small" @click="deleteOrganization">删除功能</el-button>
+                    <el-button  type="primary" :disabled="disableUpButton" size="small" @click="updateOrganization">保存修改</el-button>
+                    <el-button  type="primary"  size="small">角色授予</el-button>
+                </span>
+            </div>
+            <el-form ref="form" :model="form" label-width="100px">
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="组织机构名称">
+                            <el-input v-model="form.fOrganName" auto-complete="off" placeholder="请输入组织机构名称"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="是否正式使用">
+                            <el-select v-model="form.fOrganStatus" placeholder="请选择活动区域">
+                                <el-option label="是" value=1></el-option>
+                                <el-option label="否" value=0></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="组织结构类型">
+                            <el-select v-model="form.fOrganKind" placeholder="请选择组织结构类型">
+                                <el-option label="类型一" value=1></el-option>
+                                <el-option label="类型二" value=0></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="所属区域">
+                            <el-select v-model="form.omAreaT">
+                                <el-option label="区域一" value=1></el-option>
+                                <el-option label="区域二" value=2></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="Inner_Duty">
+                            <el-select v-model="form.fInnerDuty" placeholder="Inner_Duty">
+                                <el-option label="是" value=1></el-option>
+                                <el-option label="否" value=0></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="负责人">
+                            <el-input v-model="form.fPrincipal" auto-complete="off" placeholder="请输入负责人"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="失效日期">
+                            <el-date-picker
+                                    v-model="form.fInactiveDate"
+                                    type="date"
+                                    placeholder="选择日期"
+                                    :picker-options="pickerOptions0"
+                            >
+                            </el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="顺序">
+                            <el-input-number v-model="form.fOrder" :min="1" :max="100"></el-input-number>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="fCityCode">
+                            <el-input v-model="form.fCityCode" auto-complete="off"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="fDutyParent">
+                            <el-input v-model="form.fDutyParent" auto-complete="off"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="描述">
+                            <el-input
+                                    type="textarea"
+                                    :autosize="{ minRows: 2}"
+                                    placeholder="请输入内容"
+                                    v-model="form.fOrganDesc">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+
+
+        </el-card>
+    </el-col>
+    <!-- 新增部门From-->
+    <el-dialog title="新增部门" :visible.sync="dialogFormVisible">
+
+        <el-form :model="form">
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="组织机构名称" :label-width="formLabelWidth">
+                        <el-input v-model="childform.fOrganName" auto-complete="off" placeholder="请输入组织机构名称"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="是否正式使用" :label-width="formLabelWidth">
+                        <el-select v-model="childform.fOrganStatus" placeholder="请选择活动区域">
+                            <el-option label="是" value=1></el-option>
+                            <el-option label="否" value=0></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="组织结构类型" :label-width="formLabelWidth">
+                        <el-select v-model="childform.fOrganKind" placeholder="请选择组织结构类型">
+                            <el-option label="类型一" value=1></el-option>
+                            <el-option label="类型二" value=0></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="所属区域" :label-width="formLabelWidth">
+                        <el-select v-model="childform.omAreaT" placeholder="请选择所属区域">
+                            <el-option label="区域一" value=1></el-option>
+                            <el-option label="区域二" value=2></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="Inner_Duty" :label-width="formLabelWidth">
+                        <el-select v-model="childform.fInnerDuty" placeholder="Inner_Duty">
+                            <el-option label="是" value=1></el-option>
+                            <el-option label="否" value=0></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="负责人" :label-width="formLabelWidth">
+                        <el-input v-model="childform.fPrincipal" auto-complete="off" placeholder="请输入负责人"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="失效日期" :label-width="formLabelWidth">
+                        <el-date-picker
+                                v-model="childform.fInactiveDate"
+                                type="date"
+                                placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="顺序" :label-width="formLabelWidth">
+                        <el-input-number v-model="childform.fOrder" :min="1" :max="100"></el-input-number>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="fCityCode" :label-width="formLabelWidth">
+                        <el-input v-model="childform.fCityCode" auto-complete="off"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="fDutyParent" :label-width="formLabelWidth">
+                        <el-input v-model="childform.fDutyParent" auto-complete="off"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="24">
+                    <el-form-item label="描述" :label-width="formLabelWidth">
+                        <el-input
+                                type="textarea"
+                                :autosize="{ minRows: 2}"
+                                placeholder="请输入内容"
+                                v-model="childform.fOrganDesc">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false;insert()">确 定</el-button>
+        </div>
+    </el-dialog>
+    <!-- 一级部门From结束-->
+</el-row>

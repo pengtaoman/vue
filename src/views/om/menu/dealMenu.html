@@ -1,0 +1,119 @@
+<div>
+<el-row>
+    <el-col :span="8">
+        <div class="box" style="border: 0px;box-shadow:none;">
+            <el-card class="box-card" style="border: 0px;box-shadow:none;">
+                <div slot="header" style="padding-bottom: 0px;">
+                    <span style="line-height: 0px;">
+                        <Icon type="arrow-expand"></Icon>&nbsp;&nbsp;
+                        系统菜单 (<span style="color:gray">修改菜单后,需重新登录生效</span>)</span>
+                </div>
+                        <el-tree :data="menus"
+                                 node-key="id"
+                                 ref="treeMenu"
+                                 default-expand-all
+                                 :props="defaultProps"
+                                 @node-click="handleNodeClick"
+                                 :expand-on-click-node="false"
+                                 style="border: 0px"
+                                 :highlight-current="highlightMenu"></el-tree>
+                    <!--<el-col :span="1">&nbsp;</el-col>-->
+            </el-card>
+        </div>
+    </el-col>
+    <div id="st" style="display: none"></div>
+    <el-col :span="16" style="padding-left: 20px;" id="menuForm">
+        <el-card class="box-card" style="box-shadow:none;border: 0px;">
+            <div slot="header"  style="padding-bottom: 0px;">
+                <span style="line-height: 0px;"><Icon type="navicon-round"></Icon> &nbsp;&nbsp;菜单信息</span>
+                <span style="float: right;">
+                    <el-button  type="text" v-if="updateStatus == 1" @click="cancleUpButton" size="small">取消修改</el-button>
+                    <el-button  type="primary" v-if="updateStatus == 1" size="small" @click="doUpdate">保存修改</el-button>
+                    <el-button  type="primary" v-if="updateStatus == 0" size="small" @click="showUpdate">修改菜单</el-button>
+                    <el-button  type="primary" v-if="updateStatus == 0" size="small" @click="showNewMenu">添加下级菜单</el-button>
+
+                    <el-button  type="text" v-if="updateStatus == 2" size="small" @click="cancelAddNewMenu">取消添加</el-button>
+                    <el-button  type="primary" v-if="updateStatus == 2" size="small" @click="doAddNewMenu">确认添加</el-button>
+                    <!--<el-button  type="primary"  size="small" @click="openRolePoint">角色授予</el-button>-->
+                    <el-button  type="primary" v-if="updateStatus == 0" size="small" @click="doDeleteMenu">删除菜单</el-button>
+                </span>
+            </div>
+            <el-form ref="form" :model="form" label-width="130px">
+
+                <!--:load-root-options="loadSelectTreeOptions"-->
+                <el-form-item label="上级菜单">
+                    <treeselect
+                            :multiple="false"
+                            :autofocus="true"
+                            :openOnFocus="true"
+                            placeholder="请选择上级系统"
+                            v-model="treeSelectId"
+                            :disabled="treeSelectDisable"
+                            ref="treeSelectMenu"
+                            :load-root-options="loadSelectTreeOptions"
+                    />
+                </el-form-item>
+                <el-form-item label="菜单名称" prop="fMenuName" ref="inputfMenuName">
+                    <el-input v-model="form.fMenuName" :disabled="updateStatus == 0"></el-input>
+                </el-form-item>
+                <!--<el-form-item label="是否激活">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <el-radio-group v-model="form.fInuse" :disabled="updateStatus == 0">
+                    <el-radio class="radio" label="1">激活</el-radio>
+                    <el-radio class="radio" label="0">不激活</el-radio>
+                    </el-radio-group>
+                </el-form-item>-->
+                <el-form-item label="菜单路径">
+                    <el-input v-model="form.fPageLink"
+                              placeholder="请输入三段式菜单如/package/module/function"
+                              :disabled="updateStatus == 0"></el-input>
+                </el-form-item>
+                <el-form-item label="菜单顺序">
+                    <el-input-number v-model="form.fOrder"
+                                     :min="0" :max="100"
+                                     :disabled="updateStatus == 0"></el-input-number>
+                </el-form-item>
+                <el-form-item label="菜单图标">
+                    <el-select v-model="form.icon" placeholder="请选择"
+                               :disabled="updateStatus == 0">
+                        <el-option
+                                v-for="item in iconOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                            <span style="float: left"><i :class="item.label"></i></span>
+                            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                        </el-option>
+                    </el-select>
+                    <!--<el-input id="faiconpicker" v-model="form.icon"></el-input>-->
+                    <!--<input id="faiconpicker"></input>-->
+                </el-form-item>
+
+            </el-form>
+        </el-card>
+    </el-col>
+</el-row>
+
+
+    <Modal :title="menuRoleTitle"
+           v-model="showMenuRoleModal"
+           :mask-closable="false"
+           :closable="false"
+           ref="roleModal"
+           :width=680>
+        <Card style="width:100%" v-if="showMenuRoleModal">
+            <p slot="title">
+                <Icon type="person-stalker"></Icon>
+                角色指定
+            </p>
+            <i-table ref="tableRolesForMenu"
+                     :columns="rolesColForMenu"
+                     :data="rolesData"
+                     @on-selection-change="checkRole"
+                     :height=480></i-table>
+        </Card>
+        <div slot="footer">
+            <Button type="primary" size="large" @click="pointRole">指定角色</Button>
+            <Button type="text" size="large" @click="cancelPointRole">关闭</Button>
+        </div>
+    </Modal>
+</div>
